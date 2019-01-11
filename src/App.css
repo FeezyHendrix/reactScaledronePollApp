@@ -22,6 +22,36 @@
   color: #61dafb;
 }
 
+.Player-image {
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}
+
+.Player-text {
+  text-align: center;
+  font-size: 20px;
+}
+
+.Player-button {
+  border-radius: 5px;
+  border: 0px;
+  padding: 10px 15px;
+  background-color:  #eee;
+  display: block;
+  margin: 0 auto;
+}
+
+.flex {
+  padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
