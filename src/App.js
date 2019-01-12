@@ -38,20 +38,20 @@ class App extends Component {
   constructor() {
     super();
 
-    this.drone = new window.Scaledrone("AfdKeFBcrOpY48AO", {
+    this.drone = new window.Scaledrone("Scaledrone channelId", {
 
     });
     this.drone.on('open', error => {
       if(error) {
         return  console.error(error)
       }
-      //console.log("connected to room");
+      console.log("connected to room");
 
     });
     const room = this.drone.subscribe("votes");
     room.on('data', data => {
       // const { id } = data;
-       console.log(data)
+       console.log(data);
       this.state.players.map(player => {
         if(player.id === data) {
           return Object.assign({}, player, {
@@ -90,13 +90,13 @@ class App extends Component {
       <br />
         <h1 className="App">Vote your best chelsea player</h1>
         <div className="flex">
-           {this.state.players.map(player => 
-           <Player 
-           key={player.id} 
-           id={player.id} 
-           name={player.name} 
-           player_image={player.player_image} 
-           voteCount={player.votes} 
+           {this.state.players.map(player =>
+           <Player
+           key={player.id}
+           id={player.id}
+           name={player.name}
+           player_image={player.player_image}
+           voteCount={player.votes}
            onVote={this.handleEvent} />)}
         </div>
       </div>

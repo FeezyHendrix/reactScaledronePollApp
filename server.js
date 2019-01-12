@@ -7,8 +7,8 @@ const port = process.env.PORT || 4000;
 
 const Scaledrone = require('scaledrone-node-push');
 const sd = new Scaledrone({
-  channelId: 'AfdKeFBcrOpY48AO',
-  secretKey: 'RV8stYmPx5UcusGfDNYmpdzkmhyCg1FG'
+  channelId: process.env.SCALEDRONE_CHANNELID,
+  secretKey: process.env.SCALEDRONE_SECRETKEY
 });
 
 
@@ -25,12 +25,12 @@ app.use((req, res, next) => {
 
 
 app.post('/vote', (req, res) => {
+
     const { body } = req
     const room = 'votes';
     const response = {
       id: body.vote.player_id
     }
-    
     sd.publish(room, response.id, error => {
     // check for errors
     if(error){
