@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Player from './components/player'
 import  axios from 'axios';
@@ -33,35 +32,31 @@ const list = [
     votes: 0
   }
 ]
-//
-// function randomName() {
-//   const adjectives = ["autumn", "hidden", "bitter", "misty", "silent", "empty", "dry", "dark", "summer", "icy", "delicate", "quiet", "white", "cool", "spring", "winter", "patient", "twilight", "dawn", "crimson", "wispy", "weathered", "blue", "billowing", "broken", "cold", "damp", "falling", "frosty", "green", "long", "late", "lingering", "bold", "little", "morning", "muddy", "old", "red", "rough", "still", "small", "sparkling", "throbbing", "shy", "wandering", "withered", "wild", "black", "young", "holy", "solitary", "fragrant", "aged", "snowy", "proud", "floral", "restless", "divine", "polished", "ancient", "purple", "lively", "nameless"];
-//   const nouns = ["waterfall", "river", "breeze", "moon", "rain", "wind", "sea", "morning", "snow", "lake", "sunset", "pine", "shadow", "leaf", "dawn", "glitter", "forest", "hill", "cloud", "meadow", "sun", "glade", "bird", "brook", "butterfly", "bush", "dew", "dust", "field", "fire", "flower", "firefly", "feather", "grass", "haze", "mountain", "night", "pond", "darkness", "snowflake", "silence", "sound", "sky", "shape", "surf", "thunder", "violet", "water", "wildflower", "wave", "water", "resonance", "sun", "wood", "dream", "cherry", "tree", "fog", "frost", "voice", "paper", "frog", "smoke", "star"];
-//   const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-//   const noun = nouns[Math.floor(Math.random() * nouns.length)];
-//   return adjective + noun;
-// }
+
 
 class App extends Component {
   constructor() {
     super();
 
-    this.drone = new window.Scaledrone("qqfIB4dvANgPqQfF", {
+    this.drone = new window.Scaledrone("AfdKeFBcrOpY48AO", {
 
     });
     this.drone.on('open', error => {
       if(error) {
         return  console.error(error)
       }
-      console.log("connected to room");
+      //console.log("connected to room");
 
     });
     const room = this.drone.subscribe("votes");
     room.on('data', data => {
-      const { id } = data;
+      // const { id } = data;
+       console.log(data)
       this.state.players.map(player => {
-        if(player.id === id) {
-          player.vote++;
+        if(player.id === data) {
+          return Object.assign({}, player, {
+            votes: player.votes += 5
+          });
         } else {
           return player;
         }
@@ -78,13 +73,14 @@ class App extends Component {
    this.setState({ players: list });
  }
 
- handleEvent  = (id) => {
+ handleEvent  = id => {
+   //console.log(id)
    const vote = {
      player_id : id
    }
 
    axios.post(url, {vote}).then((response) => {
-     console.log(response);
+     //console.log(response);
    })
  }
 
@@ -94,7 +90,14 @@ class App extends Component {
       <br />
         <h1 className="App">Vote your best chelsea player</h1>
         <div className="flex">
-           {this.state.players.map(player => <Player key={player.id} id={player.id} name={player.name} player_image={player.player_image} voteCount={player.votes} onVote={this.handleEvent} />)}
+           {this.state.players.map(player => 
+           <Player 
+           key={player.id} 
+           id={player.id} 
+           name={player.name} 
+           player_image={player.player_image} 
+           voteCount={player.votes} 
+           onVote={this.handleEvent} />)}
         </div>
       </div>
     )
