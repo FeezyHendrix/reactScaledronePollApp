@@ -14,7 +14,7 @@ class Player extends Component {
   render() {
     return (
       <div>
-        <h1 className="App">{this.state.count}</h1>
+        <h1 className="App">{this.props.voteCount}</h1>
         <img className="Player-image" src={this.props.player_image} alt="player image" />
         <p className="Player-text">{this.props.name}</p>
         <button className="Player-button" onClick={this.handleVote}>Vote +</button>
